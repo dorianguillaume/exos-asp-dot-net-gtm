@@ -1,0 +1,60 @@
+﻿@model List<TodoList.Models.Tache>
+
+@{
+    ViewData["Title"] = "CreationGroupee";
+}
+
+<h1>CreationGroupee</h1>
+
+@if (Model == null)
+{
+
+    <form asp-action="InitSaisie">
+        <div class="form-group row">
+            <label for="nbTaches" class="col-form-label m-1">Nombres de tâches à créer</label>
+            <div class="m-1">
+                <input name="nbTaches" type="number" class="form-control" id="nbTaches">
+            </div>
+            <button type="submit" class="btn btn-primary">Créer</button>
+        </div>
+    </form>
+}
+@{
+    if (Model != null)
+    {
+        <form asp-action="CreationGroupee">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => Model[0].DateEcheance)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                <textarea asp-for="@Model[i].Description" class="form-control"></textarea>
+                            </td>
+                            <td class="h-100 text-center align-middle">
+                                <input asp-for=" @Model[i].DateEcheance" class="form-control" />
+                                @*@Html.EditorFor(modelItem => @Model[i].DateEcheance, new { htmlAttributes = new { @class = "form-control"} }) *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <div class="row d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </div>  
+        </form>
+    }
+    <a asp-action="Index">Retour à la liste !</a>
+}
