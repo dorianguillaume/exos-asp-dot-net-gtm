@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TodoList</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="container-fluid">
+    <div class="row">
+        <header class="col-12 p-1 bg-light mb-3">
+            <h1 class="text-center font-weight-bold ">Tâches</h1>
+        </header>
+    </div>
+    <div class="row">
+        <aside class="col-12 col-md-3 d-flex flex-column mb-3 mb-md-0">
+            <a class="list-group-item list-group-item-action bg-dark text-light " asp-controller="Home" asp-action="Index">
+                <h2>Index</h2>
+            </a>
+            <a class="list-group-item list-group-item-action bg-dark text-light" asp-controller="Home" asp-action="ContactUs">
+                <h2>Contact</h2>
+            </a>
+            <a class="list-group-item list-group-item-action bg-dark text-light" asp-controller="Home" asp-action="About">
+                <h2>About</h2>
+            </a>
+            <a class="list-group-item list-group-item-action bg-dark text-light" asp-controller="Home" asp-action="Privacy">
+                <h2>Privacy</h2>
+            </a>
+            <a class="list-group-item list-group-item-action bg-dark text-light" asp-controller="Taches" asp-action="Index">
+                <h2>Taches</h2>
+            </a>
+            <a class="list-group-item list-group-item-action bg-dark text-light" asp-controller="Utilitaires" asp-action="Index">
+                <h2>Utilitaires</h2>
+            </a>
+            <a class="list-group-item list-group-item-action bg-dark text-light" asp-controller="Taches" asp-action="Statistiques">
+                <h2>Statistiques</h2>
+            </a>            
+        </aside>
+        <div class="col-12 col-md-8 container-fluid">
+            <main role="main" class="pb-3 d-flex flex-column justify-content-center">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+</body>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@RenderSection("Scripts", required: false)
+</html>

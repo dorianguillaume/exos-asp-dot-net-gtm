@@ -1,29 +1,33 @@
 ﻿@model TodoList.Models.Calcul
 
-    <form class="form-inline" asp-action="calculsdates">
-        <div class="form-group m-1">
-            <input asp-for="DateInitiale" class="form-control" id="dateInitiale" >
-        </div>
-        <div class="form-group">
-            <span class="font-weight-bold">+</span>
-        </div>
-        <div class="form-group m-1">
-            <div class="input-group">
-                <input asp-for="Jour" class="form-control" id="addDay" placeholder="Jour" aria-describedby="addDayAppend">
-                <div class="input-group-append">
-                    <span class="input-group-text" id="addDayAppend">Jours</span>
-                </div>
+<form class="form-inline" asp-action="calculsdates">
+    <div class="form-group m-1">
+        <input asp-for="DateInitiale" class="form-control" id="dateInitiale">
+    </div>
+    <div class="form-group">
+        <select class="custom-select" asp-for="Operateur">
+            <option value="+">+</option>
+            <option value="-">-</option>
+        </select>
+    </div>
+    <div class="form-group m-1">
+        <div class="input-group">
+            <input asp-for="Jour" class="form-control" id="addDay" placeholder="Jour" aria-describedby="addDayAppend">
+            <div class="input-group-append">
+                <span class="input-group-text" id="addDayAppend">Jours</span>
             </div>
         </div>
-        <div class="form-group m-1">
-            <button type="submit" class="btn btn-primary font-weight-bold">=</button>
-        </div>
-        <div class="form-group m-1">
-            <input class="form-control" readonly value="@ViewBag.DateFinale">
-        </div>
-    </form>
-    <div class="container">
-        <div class="row">
-            <a asp-action="Download">Télécharge mon fichier</a>
-        </div>
     </div>
+    <div class="form-group m-1">
+        <button type="submit" class="btn btn-primary font-weight-bold">=</button>
+    </div>
+    <div class="form-group m-1">
+        <input class="form-control" readonly value="@ViewBag.DateFinale">
+    </div>
+</form>
+<span asp-validation-for="Jour" class="text-danger"></span>
+<div class="container">
+    <div class="row">
+        <a asp-action="Download">Télécharge mon fichier</a>
+    </div>
+</div>

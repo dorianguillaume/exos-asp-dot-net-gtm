@@ -18,12 +18,21 @@ namespace TodoList.Controllers
         [ActionName("calculsdates")]
         public IActionResult AjouterJours(Calcul calcul)
         {
-            ModelState.Remove("DateFinale");
-            calcul.DateFinale = calcul.DateInitiale.AddDays(calcul.Jour);
-            //return View("Index", calcul);
+            if (ModelState.IsValid)
+            {
 
-            ViewBag.DateFinale = calcul.DateFinale.ToString("dd/MM/yyyy");
-            return View("Index");
+                ModelState.Remove("DateFinale"); //Pour afficher la date
+                if (calcul.Operateur == '+')
+                {
+                    calcul.DateFinale = calcul.DateInitiale.AddDays(calcul.Jour);
+                }
+                else calcul.DateFinale = calcul.DateInitiale.AddDays(-calcul.Jour);
+
+                //return View("Index", calcul);
+
+                ViewBag.DateFinale = calcul.DateFinale.ToString("dd/MM/yyyy");
+            }
+                return View("Index");
         }
 
         public FileResult Download()

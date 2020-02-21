@@ -1,0 +1,19 @@
+﻿@model TodoList.Models.StatistiquesTacheViewModel
+<div class="row">
+    <div class="col-12 card text-center p-0">
+        <div class="card-header">
+            <h1>Statistiques</h1>
+        </div>
+        <div class="card-body">
+            <p>@Html.DisplayNameFor(model => model.NbTacheEnCours) : <span class="font-weight-bold">@Html.DisplayFor(model => model.NbTacheEnCours)</span></p>
+            <p>@Html.DisplayNameFor(model => model.NbTacheTerminee) : <span class="font-weight-bold">@Html.DisplayFor(model => model.NbTacheTerminee)</span></p>
+            <p>@Html.DisplayNameFor(model => model.NbTacheEnRetard) : <span class="font-weight-bold">@Html.DisplayFor(model => model.NbTacheEnRetard)</span></p>
+            <p>@Html.DisplayNameFor(model => model.DelaiMoyenRealisationTache) : <span class="font-weight-bold">@Html.DisplayFor(model => model.DelaiMoyenRealisationTache)</span></p>
+        </div>
+        <footer class="card-footer text-muted">
+            <div class="container">
+                &copy; 2020 - TodoList - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+</div>

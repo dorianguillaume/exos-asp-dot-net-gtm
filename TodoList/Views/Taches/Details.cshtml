@@ -4,39 +4,52 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="row">
+    <div class="col-12 card text-center p-0">
+        <div class="card-header">
+            <h1>Détails</h1>
+        </div>
+        <div class="card-body">
+            <dl class="row d-flex justify-content-center">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.DateCreation)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.DateCreation)
+                </dd>
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.DateEcheance)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.DateEcheance)
+                </dd>
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Terminee)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => model.Terminee)
+                </dd>
+            </dl>
+            <div >
+                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+        <footer class="card-footer text-muted">
+            <div class="container">
+                &copy; 2020 - TodoList - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+</div>
 
-<div>
-    <h4>Tache</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateCreation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateEcheance)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateEcheance)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Terminee)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Terminee)
-        </dd>
-    </dl>
+
+    
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

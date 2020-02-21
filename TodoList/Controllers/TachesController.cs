@@ -18,12 +18,24 @@ namespace TodoList.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Statistiques()
+        {
+            var stats = new StatistiquesTacheViewModel();
+            stats.NbTacheEnCours = _context.Taches.Where(t => t.Terminee != true).Count();
+            stats.NbTacheTerminee = _context.Taches.Where(t => t.Terminee == true).Count();
+            stats.NbTacheEnRetard = _context.Taches.Where(t => t.DateEcheance < DateTime.Now && t.Terminee != true).Count();
+            stats.DelaiMoyenRealisationTache =  _context.Taches.Where(t => t.Terminee).ToList().Average(t => ((DateTime)t.DateEcheance - t.DateCreation).TotalDays);
+            return View(stats);
+
+        }
         // GET: Taches
         public async Task<IActionResult> Index()
         {
             ViewBag.NbTachesTerminee = _context.Taches.Where(t => t.Terminee == true).Count();
             ViewBag.ListeTache = await _context.Taches.ToListAsync();
-            return View(await _context.Taches.ToListAsync());
+            var taches = await _context.Taches.ToListAsync();
+            taches.Add(new Tache() {DateCreation = DateTime.Now });
+            return View(taches);
         }
 
         // GET: Taches/Details/5
@@ -47,7 +59,8 @@ namespace TodoList.Controllers
         // GET: Taches/Create
         public IActionResult Create()
         {
-            return View();
+
+            return View(new Tache() { DateCreation = DateTime.Now });
         }
 
         // POST: Taches/Create
@@ -57,12 +70,14 @@ namespace TodoList.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Description,DateCreation,DateEcheance,Terminee")] Tache tache)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(tache);
+                _context.Add(tache);                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(tache);
         }
 

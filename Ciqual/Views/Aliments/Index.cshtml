@@ -1,0 +1,56 @@
+﻿@model Ciqual.Models.FamillesAlim
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Aliments</h1>
+<form class="mb-3">
+    <div class="form-row">
+        <div class="col-9">
+
+            <select  class="custom-select" name="idFamille" asp-items="@(new SelectList(Model.Famille,"IdFamille", "Nom", ViewBag.SelectId))"></select> 
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <button class="btn btn-primary">Filtrer</button>
+        </div>
+
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aliments[0].IdAliment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aliments[0].Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aliments[0].NbConstituant)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Aliments)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAliment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NbConstituant)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAliment">&#x1F589</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAliment">&#x1F5B9</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAliment">&#x1F5D1</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
