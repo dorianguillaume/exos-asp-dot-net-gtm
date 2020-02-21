@@ -1,0 +1,84 @@
+﻿@model PageItems<Ciqual.Models.Aliment>
+
+@{
+    ViewData["Title"] = "ListByFirstLetter";
+}
+
+<h1>ListByFirstLetter</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="row d-flex justify-content-between mb-3">
+    @for (char i = 'A'; i <= 'Z'; i++)
+    {
+        <a asp-action="ListByFirstLetter" asp-route-letter="@i.ToString()">@i</a>
+    }
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().IdFamilleNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdFamilleNavigation.Nom)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdAliment">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdAliment">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdAliment">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var etatPrecedent = !Model.HasPreviousPage ? "disabled" : "";
+    var etatsuivant = !Model.HasNextPage ? "disabled" : "";
+}
+<div class="row d-flex justify-content-center">
+    <div class="col-2 d-flex justify-content-center align-items-center">
+        <a asp-action="ListByFirstLetter"
+           asp-route-page="@(Model.PageIndex - 1)"
+           asp-route-letter="@ViewBag.Letter"
+           class="btn btn-primary @etatPrecedent">
+            Précédent
+        </a>
+    </div>
+    <div class="col-5 d-flex justify-content-between align-items-center">
+        @for (int i = 1; i < Model.TotalPages; i++)
+        {
+            if (Model.PageIndex == i)
+            {
+                <a asp-action="ListByFirstLetter" asp-route-page="@i" asp-route-letter="@ViewBag.Letter" class="font-weight-bold">@i</a>
+            }
+            else
+            {
+                <a asp-action="ListByFirstLetter" asp-route-page="@i" asp-route-letter="@ViewBag.Letter" class="font-weight-light">@i</a>
+            }
+        }
+    </div>
+    <div class="col-2 d-flex justify-content-center align-items-center">
+        <a asp-action="ListByFirstLetter"
+           asp-route-page="@(Model.PageIndex + 1)"
+           asp-route-letter="@ViewBag.Letter"
+           class="btn btn-primary @etatsuivant">
+            Suivant
+        </a>
+    </div>
+</div>
+

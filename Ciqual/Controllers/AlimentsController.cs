@@ -17,6 +17,20 @@ namespace Ciqual.Controllers
         {
             _context = context;
         }
+        public async Task<IActionResult> ListByFirstLetter(string letter, int page=1)
+        {
+            IQueryable<Aliment> reqAliments;
+            ViewBag.Letter = letter;
+
+            if (letter == null)
+            {
+                reqAliments =  _context.Aliment.Include(a => a.IdFamilleNavigation);
+
+            } else reqAliments =  _context.Aliment.Where(a => a.Nom.StartsWith(letter)).Include(a => a.IdFamilleNavigation);
+
+            var aliments = await PageItems<Aliment>.CreateAsync(reqAliments, page, 20);
+            return View(aliments);
+        }
 
         // GET: Aliments
         public async Task<IActionResult> Index(int? idFamille)
