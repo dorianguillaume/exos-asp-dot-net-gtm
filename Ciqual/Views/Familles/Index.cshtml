@@ -10,10 +10,11 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdFamille)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TriParId">@Html.DisplayNameFor(model => model.IdFamille)</a>
+                
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nom)
+                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TriParNom">@Html.DisplayNameFor(model => model.Nom)</a>
             </th>
         </tr>
     </thead>
