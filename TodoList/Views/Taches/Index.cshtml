@@ -4,112 +4,130 @@
     ViewData["Title"] = "Index";
 }
 
-    <div class="row">
-        <div class="col-12 card text-center p-0">
-            <div class="card-header">
-                <h1>Liste de Tâches</h1>
-            </div>
-            <div class="card-body">
-                <div class="row d-flex justify-content-center">
-                    <p>
-                        <span class="font-weight-bold">@ViewBag.NbTachesTerminee</span>
-                        @{
-                            if (@ViewBag.NbTachesTerminee > 1)
-                            {
-                                <text>tâches terminées</text>
-                            }
-                            else if (@ViewBag.NbTachesTerminee == 1)
-                            {
-                                <text>tâche terminée</text>
-                            }
-                            else
-                            {
-                                <text>tâche terminée ....TRAVAILLE PLUS</text>
-                            }
-                            <text> / </text> @ViewBag.ListeTache.Count;
+<div class="row">
+    <div class="col-12 card text-center p-0">
+        <div class="card-header">
+            <h1>Liste de Tâches</h1>
+        </div>
+        <div class="card-body">
+            <div class="row d-flex justify-content-center">
+                <p>
+                    <span class="font-weight-bold">@ViewBag.NbTachesTerminee</span>
+                    @{
+                        if (@ViewBag.NbTachesTerminee > 1)
+                        {
+                            <text>tâches terminées</text>
                         }
-                    </p>
-                </div>
-                <div class="row d-flex flex-column align-items-center mb-3">
-                    <a asp-action="Create" class="col-2 btn btn-success mb-3">Créer une tâches</a>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
-                        Créer une tache via modal
-                    </button>
+                        else if (@ViewBag.NbTachesTerminee == 1)
+                        {
+                            <text>tâche terminée</text>
+                        }
+                        else
+                        {
+                            <text>tâche terminée ....TRAVAILLE PLUS</text>
+                        }
+                        <text> / </text> @ViewBag.ListeTache.Count;
+                    }
+                </p>
+            </div>
+            <div class="row d-flex flex-column align-items-center mb-3">
+                <a asp-action="Create" class="col-2 btn btn-success mb-3">Créer une tâches</a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
+                    Créer une tache via modal
+                </button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <partial name="FormCreate" model="@Model.Last()" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" value="Create" class="btn btn-primary" form="formCreateTask">Ajouter la tâche</button>
-                                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <partial name="FormCreate" model="@Model.Last()" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" value="Create" class="btn btn-primary" form="formCreateTask">Ajouter la tâche</button>
                             </div>
                         </div>
                     </div>
-                    <a asp-action="InitSaisie" class="col-2 btn btn-primary">Saisie groupée de tâches</a>
                 </div>
-                <div class="row">
-                    <table class="table">
-                        <thead>
+                <a asp-action="InitSaisie" class="col-2 btn btn-primary">Saisie groupée de tâches</a>
+            </div>
+            <form class="row" asp-action="Index">
+                <div class="col-12 form-row">
+                    <div class=" col-6 form-group d-flex align-items-center">
+                        <label for="description" class="m-0 mr-3">Description</label>
+                        <input name="search" type="text" class="form-control" id="description" value="@ViewBag.Search" placeholder="Votre recherche" />
+                    </div>
+                    <div class="col-6 form-group d-flex align-items-center">
+                        <label for="etat" class="m-0 mr-3">Etat</label>
+                        <select name="etat" class="custom-select" id="etat" asp-items="@(new SelectList(ViewBag.Etats, "Key", "Value", ViewBag.Etat))">                            
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 form-row d-flex justify-content-center mb-3">
+                    <button type="submit" class="btn btn-primary">Trier</button>
+                </div>
+            </form>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => Model[0].Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => Model[0].DateCreation)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => Model[0].DateEcheance)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => Model[0].Terminee)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < Model.Count() - 1; i++)
+                        {
                             <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => Model[0].Description)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => Model[0].DateCreation)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => Model[0].DateEcheance)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => Model[0].Terminee)
-                                </th>
-                                <th></th>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].DateCreation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].DateEcheance)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Terminee)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@Model[i].Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@Model[i].Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@Model[i].Id">Delete</a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.Count() - 1; i++)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => Model[i].Description)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => Model[i].DateCreation)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => Model[i].DateEcheance)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => Model[i].Terminee)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@Model[i].Id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@Model[i].Id">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@Model[i].Id">Delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>        
-            <footer class="card-footer text-muted">
-                <div class="container">
-                    &copy; 2020 - TodoList - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </div>
-            </footer>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <footer class="card-footer text-muted">
+            <div class="container">
+                &copy; 2020 - TodoList - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
     </div>
+</div>
 

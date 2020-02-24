@@ -36,6 +36,27 @@ namespace Ciqual
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddDbContext<CiqualContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CiqualConnection")));
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+            });
+
+            // Mise en place des sessions au moyen d'un cache mémoire
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Définit la durée maxi d'inactivité de la session
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+
+                // Active le cookie de session et le rend obligatoire
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +75,7 @@ namespace Ciqual
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ciqual.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace Ciqual.Controllers
 {
+    [Authorize]
     public class AlimentsController : Controller
     {
         private readonly CiqualContext _context;
@@ -17,6 +20,8 @@ namespace Ciqual.Controllers
         {
             _context = context;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> ListByFirstLetter(string letter, int page=1)
         {
             IQueryable<Aliment> reqAliments;
@@ -32,6 +37,7 @@ namespace Ciqual.Controllers
             return View(aliments);
         }
 
+        [AllowAnonymous]
         // GET: Aliments
         public async Task<IActionResult> Index(int? idFamille)
         {
@@ -47,11 +53,15 @@ namespace Ciqual.Controllers
             
             famillesAlim.Aliments = alimentsConsti;
             famillesAlim.Famille = familles;
-            ViewBag.SelectId = idFamille != null ? idFamille : 0;
+            idFamille = idFamille != null ? idFamille : 0;
+            ViewBag.SelectId = idFamille;
 
+            HttpContext.Session.SetInt32("Famille", (int)idFamille);
+;
             return View(famillesAlim);
         }
 
+        [AllowAnonymous]
         // GET: Aliments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -74,7 +84,10 @@ namespace Ciqual.Controllers
         // GET: Aliments/Create
         public IActionResult Create()
         {
-            ViewData["IdFamille"] = new SelectList(_context.Famille, "IdFamille", "Nom");
+
+            int? famille = HttpContext.Session.GetInt32("Famille");
+
+            ViewData["IdFamille"] = new SelectList(_context.Famille, "IdFamille", "Nom", famille);
             return View();
         }
 
